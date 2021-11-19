@@ -23,7 +23,8 @@ namespace Linq
                 .Select((name, i) => $"{i+1}. " + name.Trim()));
         }
 
-        // "Jason Puncheon, 26/06/1986; Jos Hooiveld, 22/04/1983; Kelvin Davis, 29/09/1976; Luke Shaw, 12/07/1995; Gaston Ramirez, 02/12/1990; Adam Lallana, 10/05/1988"
+
+        // TODO: Alternative method that doesn't try to fix bad inputs, but instead skips them + only operates on good inputs/returns None.
         public static IEnumerable<Player> Q1_2SortPlayersByAge(string players)
         {
             return players
