@@ -15,14 +15,14 @@ namespace Linq.Tests
             var result =
                 Puzzle3Solver.Q3_1GetLongestConsecutiveNoSales(
                     "1,2,1,1,0,3,1,0,0,2,4,1,0,0,0,0,2,1,0,3,1,0,0,0,6,1,3,0,0,0");
-            result.Should().Be(4);
+            result.ValueOr(0).Should().Be(4);
         }
 
         [Fact]
         public void TestQ3_1HandlesNullInput()
         {
             var result = Puzzle3Solver.Q3_1GetLongestConsecutiveNoSales(null);
-            result.Should().Be(10.None()); //TODO: Make 3_1 return Optional
+            result.Should().Be(10.None());
         }
 
         [Fact]

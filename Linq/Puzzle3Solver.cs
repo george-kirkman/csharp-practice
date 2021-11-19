@@ -2,19 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Optional;
 
 namespace Linq
 {
     public static class Puzzle3Solver
     {
-        public static int Q3_1GetLongestConsecutiveNoSales(string input)
+        public static Option<int> Q3_1GetLongestConsecutiveNoSales(string input)
         {
-            return input
-                .Split(',')
-                .Select(x => x == "0" ? "Y" : "N")
-                .Aggregate("", (acc, next) => acc + next)
-                .Split(new[] {"Y"}, StringSplitOptions.RemoveEmptyEntries)
-                .Max(x => x.Length);
+            var optionInput = input.SomeNotNull();
+            return optionInput
+                .Map(s => s.Split(',')
+                    .Select(x => x == "0" ? "Y" : "N")
+                    .Aggregate("", (acc, next) => acc + next)
+                    .Split(new[] {"Y"}, StringSplitOptions.RemoveEmptyEntries)
+                    .Max(x => x.Length)
+                );
         }
 
         public static IEnumerable<string> Q3_2WhereFullHouses(string input)
