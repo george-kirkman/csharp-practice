@@ -70,32 +70,6 @@ namespace Linq
                     }
                 );
         }
-        
-        private static void OriginalAnswers()
-        {
-            //QUESTION 1
-            string names =
-                "Davis, Clyne, Fonte, Hooiveld, Shaw, Davis, Schneiderlin, Cork, Lallana, Rodriguez, Lambert";
-
-            // ATTEMPT
-            string output = String.Join('.', Enumerable.Zip(Enumerable.Range(1, names.Length + 1), names.Split(',')));
-
-            // ANSWER
-            output = String.Join(',', names
-                .Split(',')
-                .Select((item, index) => index + 1 + "." + item)
-                .ToArray());
-            //Console.WriteLine(output);
-
-            //QUESTION 2
-            var input =
-                "Jason Puncheon, 26/06/1986; Jos Hooiveld, 22/04/1983; Kelvin Davis, 29/09/1976; Luke Shaw, 12/07/1995; Gaston Ramirez, 02/12/1990; Adam Lallana, 10/05/1988";
-            var orderedAgedPeople = input
-                .Split(';')
-                .OrderBy(nameAgeString => DateTime.ParseExact(nameAgeString.Split(',').Last().Trim(), "dd/MM/yyyy",
-                    CultureInfo.InvariantCulture)
-                );
-        }
     }
 
     public class Player
