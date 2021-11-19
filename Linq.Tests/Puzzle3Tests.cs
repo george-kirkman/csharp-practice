@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MoreLinq;
 using FluentAssertions;
 using Optional;
 using Xunit;
-using static System.Collections.IEnumerable;
 
 namespace Linq.Tests
 {
@@ -39,11 +39,9 @@ namespace Linq.Tests
         [Fact]
         public void TestQ3_1ReturnsZeroWhenAllSales()
         {
-            //var list = new List<string> {"One", "Two", "Of", "Yo"};
-            //var maxWords = list.MaxBy(x => x.Length);    // TODO: Neither I nor Rider can seem to find out how to import/use this? Is only in .Net 6. NuGet Import?
             var input = "1, 2, 3, 4, 5";
             var result = Puzzle3Solver.Q3_1GetLongestConsecutiveNoSales(input);
-            result.ValueOr(1).Should().Be(0);
+            result.Should().Be(10.None());
         }
 
         [Fact]

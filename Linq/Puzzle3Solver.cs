@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using MoreLinq;
 using Optional;
+using Optional.Collections;
 
 namespace Linq
 {
@@ -12,8 +14,17 @@ namespace Linq
         // Xapien MaxOrNone() extension method could change this. Or MaxBy() returns a list 
         public static Option<int> Q3_1GetLongestConsecutiveNoSales(string input)
         {
-            var optionInput = input.SomeNotNull();
-            return optionInput
+            // New method uses MoreLinq MaxBy()
+            var alternative = input.SomeNotNull()
+                .FlatMap(s => s.Split(',')
+                    .Select(x => x.Trim() == "0" ? "N" : "Y")
+                    .Aggregate("", (acc, next) => acc + next)
+                    .Split(new[] {"Y"}, StringSplitOptions.RemoveEmptyEntries)
+                    .MaxBy(x => x.Length).ToList()
+                    .FirstOrNone().Map(x => x.Length));
+            
+            // NOTE: OLD METHOD using DefaultIfEmpty
+            var result = input.SomeNotNull()
                 .Map(s => s.Split(',')
                     .Select(x => x.Trim() == "0" ? "N" : "Y")
                     .Aggregate("", (acc, next) => acc + next)
@@ -21,6 +32,7 @@ namespace Linq
                     .DefaultIfEmpty("")
                     .Max(x => x.Length)
                 );
+            return alternative;
         }
 
         public static IEnumerable<string> Q3_2WhereFullHouses(string input)
