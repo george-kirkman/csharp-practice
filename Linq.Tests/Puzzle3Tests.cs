@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Optional;
 using Xunit;
+using static System.Collections.IEnumerable;
 
 namespace Linq.Tests
 {
@@ -22,15 +24,54 @@ namespace Linq.Tests
         public void TestQ3_1HandlesNullInput()
         {
             var result = Puzzle3Solver.Q3_1GetLongestConsecutiveNoSales(null);
-            result.Should().Be(10.None());
+           result.Should().Be(10.None());
+        }
+
+        [Fact]
+        public void TestQ3_1HandlesWhitespace()
+        {
+            var input = "1, 2,3 ,  4 ,   0  ,0, 0 ,3,0 ,2,1";
+            var result = Puzzle3Solver.Q3_1GetLongestConsecutiveNoSales(input);
+            result.ValueOr(0).Should().Be(3);
+        }
+
+        // NOTE: Xapien as Option extension method called .MaxOrNone()
+        [Fact]
+        public void TestQ3_1ReturnsZeroWhenAllSales()
+        {
+            //var list = new List<string> {"One", "Two", "Of", "Yo"};
+            //var maxWords = list.MaxBy(x => x.Length);    // TODO: Neither I nor Rider can seem to find out how to import/use this? Is only in .Net 6. NuGet Import?
+            var input = "1, 2, 3, 4, 5";
+            var result = Puzzle3Solver.Q3_1GetLongestConsecutiveNoSales(input);
+            result.ValueOr(1).Should().Be(0);
         }
 
         [Fact]
         public void TestQ3_2ReturnsCorrectAnswer()
         {
             var input = "4♣ 5♦ 6♦ 7♠ 10♥;10♣ Q♥ 10♠ Q♠ 10♦;6♣ 6♥ 6♠ A♠ 6♦;2♣ 3♥ 3♠ 2♠ 2♦;2♣ 3♣ 4♣ 5♠ 6♠";
+            var expected = new List<string> {"10♣ Q♥ 10♠ Q♠ 10♦", "2♣ 3♥ 3♠ 2♠ 2♦"};
             var result = Puzzle3Solver.Q3_2WhereFullHouses(input);
-            result.Should().Equal(new List<string> {"10♣ Q♥ 10♠ Q♠ 10♦", "2♣ 3♥ 3♠ 2♠ 2♦"});
+            result.Should().Equal(expected);
+        }
+
+        [Fact]
+        public void TestQ3_2HandlesNoFullHouses()
+        {
+            var input = "4♣ 5♦ 6♦ 7♠ 10♥;  2♣ 3♣ 4♣ 5♠ 6♠";
+            var result = Puzzle3Solver.Q3_2WhereFullHouses(input);
+            result.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void TestQ3_2IgnoresUnderOrOverdrawnHands()
+        {
+            // TODO: Does not check for correct length hands, but 4 cards cannot satisfy condition.
+            // ♠♣♦♠
+            var input = "4♠ 4♦;  2♠ 2♦ 2♣ 5♠;  2♣ 3♥ 3♠ 2♠ 2♦;  2♣ 2♠ 2♦ 3♠ 3♠ 3♦";
+            var expected = "2♣ 3♥ 3♠ 2♠ 2♦";
+            var result = Puzzle3Solver.Q3_2WhereFullHouses(input);
+            result.Should().Equal(expected);
         }
 
         [Fact]

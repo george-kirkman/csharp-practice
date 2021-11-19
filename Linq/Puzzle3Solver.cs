@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Optional;
 
@@ -8,14 +9,16 @@ namespace Linq
 {
     public static class Puzzle3Solver
     {
+        // Xapien MaxOrNone() extension method could change this. Or MaxBy() returns a list 
         public static Option<int> Q3_1GetLongestConsecutiveNoSales(string input)
         {
             var optionInput = input.SomeNotNull();
             return optionInput
                 .Map(s => s.Split(',')
-                    .Select(x => x == "0" ? "Y" : "N")
+                    .Select(x => x.Trim() == "0" ? "N" : "Y")
                     .Aggregate("", (acc, next) => acc + next)
                     .Split(new[] {"Y"}, StringSplitOptions.RemoveEmptyEntries)
+                    .DefaultIfEmpty("")
                     .Max(x => x.Length)
                 );
         }
@@ -24,10 +27,16 @@ namespace Linq
         {
             return input
                 .Split(';')
-                .Where(hand => hand
-                    .Split(' ')
-                    .GroupBy(card => card.First())
-                    .All(group => group.Count() == 2 || group.Count() == 3));
+                .Where(hand =>
+                {
+                    var cards = hand
+                        .Trim()
+                        .Split(' ').ToImmutableList();
+                    return cards.Count == 5 && cards
+                        .GroupBy(card => card.First()).ToImmutableList()
+                        .All(group => group.Count() == 2 || group.Count() == 3);
+                })
+                .Select(hand => hand.Trim());
         }
 
         public static IEnumerable<string> Q3_3DayOfWeekOfNextTenChristmas(int year)
