@@ -6,14 +6,19 @@ The majority of this project focuses on LINQ practice using the puzzles from htt
 * `Linq/Program.cs` contains my initial scrawling linq pipelines for each question.
 * `Linq/Puzzle1Solver.cs` contains answers to the [Puzzle #1](https://markheath.net/post/lunchtime-linq-challenge).
 * `Linq/Puzzle3Solver.cs` contains answers to the harder [Puzzle #3](https://markheath.net/post/linq-challenge-3).
-These solvers are unit tested (not many edge cases yet) in `Linq.Tests`.
+* These solvers are unit tested (not many edge cases yet) in `Linq.Tests`.
+
+## Unit Testing
+* Linq.Tests` covers unit tests for the Linq puzzles and provides practice for Unit testing in C# and Rider.
+* These unit tests use `XUnit` and `FluentAssertions`.
+
 
 ## Async/await
-`AsyncBreakfast` contains practice code and comments from the guide found at https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/.
-`SimpleAsync` contains my attempt at a simple asynchronous example problem involving some (artificially) time-consuming operations on a number.
+* `AsyncBreakfast` contains practice code and comments from the guide found at https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/.
+* `SimpleAsync` contains my attempt at a simple asynchronous example problem involving some (artificially) time-consuming operations on a number.
 
 ## Optionals
-`Optionals` contains notes from the readme at https://github.com/nlkl/Optional. There is also a practice problem at the end.
+* `Optionals` contains notes from the readme at https://github.com/nlkl/Optional. There is also a practice problem at the end.
 
 ## Sandbox
-Just a place for scratch code and experimentation before implementing elsewhere.
+* Just a place for scratch code and experimentation before implementing elsewhere.
